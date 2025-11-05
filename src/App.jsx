@@ -1,5 +1,9 @@
 export default function App() {
   return (
-    <h1 className="text-5xl font-bold text-blue-500">Hello Tailwind!</h1>
+    <header 
+    class="bg-gradient-to-r from-violet-300 via-purple-400 to-violet-300
+    text-center">
+      <p>MyCalculator</p>
+      </header>
   );
 }

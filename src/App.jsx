@@ -1,32 +1,42 @@
 import React,{useState} from 'react';
+import { evaluate } from 'mathjs';
 import './App.css'
 export default function App() {
   const [result,setResult] = useState('');
   const [isCalculated,setIsCalculated] = useState(false);
   const isOperator = (char) => ['+','-','*','/'].includes(char);
-  const isNumberOrDot = (char) => /[\d\.]/.test(char);
 
   const handleClick = (e) => {
     const value = e.target.value;
     const lastChar = result.slice(-1);
 
-    if(isCalculated){
+    if (isOperator(lastChar) && isOperator(value)){
+      setResult(result.slice(0,-1).concat(value));
+      return;
+    }
+    if (value === '.') {
+      const currentNumber = result.split(/[\+\-\*\/]/).pop();
+      if(currentNumber.includes('.')){
+        return;
+      }
+    }
+    if (result === '' && isOperator(value) && value !== '-') {
+      return;
+    }
+    if (isCalculated) {
       if(isOperator(value)){
-        setResult(result.concat(value));
-        setIsCalculated(false);
-      } else if(isNumberOrDot(value)){
-        //แสดงอักขระเฉพาะ
-        setResult(value);
-        setIsCalculated(false);
-      }
-    } else if (result === 'Error') {
-        setResult(value);
-      } else if (isOperator(lastChar) && isOperator(value)) {
-        setResult(result.slice(0,-1).concat(value));
+        setResult(result+value);
       } else {
-        setResult(result.concat(value));
+      setResult(value);
       }
-  }
+      setIsCalculated(false);
+      return;
+    } 
+    if (result === 'Error') {
+      setResult(value);
+    } 
+    setResult(result+value)
+  };
   const clear = () => {
     setResult('');
     setIsCalculated(false);
@@ -43,7 +53,8 @@ export default function App() {
 
   const calculate = () => {
     try{
-      setResult(eval(result).toString());
+      const calculationResult = evaluate(result).toString();
+      setResult(calculationResult);
       setIsCalculated(true);
     }catch(err){
       setResult('Error');

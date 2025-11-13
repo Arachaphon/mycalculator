@@ -1,6 +1,6 @@
 **MyCalculator App| React + Vite**
 
-A responsive calculator application built using React and Vite. Designed for clean user interaction and and Tailwind Css for modern styling.
+A calculator application built using React and Vite. Designed for clean user interaction and and Tailwind Css for modern styling.
 
 Live Demo:https://mycalculator-six-delta.vercel.app/
 
